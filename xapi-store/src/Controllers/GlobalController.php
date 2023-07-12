@@ -79,6 +79,7 @@ class GlobalController extends Controller
      */
     public function clearAllStores(Request $request)
     {
+        abort(403);
         // Check permissions.
         $this->authorizer->must('xapi-extra.manage');
 
@@ -109,9 +110,11 @@ class GlobalController extends Controller
     {
         // Check permissions.
         $this->authorizer->must('xapi-extra.manage');
-        if (isset($this->authentifier->consumer()->owner_id)
-            && $this->authentifier->consumer()->owner_id != $id) {
-                throw new AuthorizationException("Forbidden: you can't clear this store.");
+        if (
+            isset($this->authentifier->consumer()->owner_id)
+            && $this->authentifier->consumer()->owner_id != $id
+        ) {
+            throw new AuthorizationException("Forbidden: you can't clear this store.");
         }
 
         // Do it.
@@ -135,15 +138,17 @@ class GlobalController extends Controller
     {
         // Check permissions.
         $this->authorizer->must('xapi-extra.manage');
-        if (isset($this->authentifier->consumer()->owner_id)
-            && $this->authentifier->consumer()->owner_id != $id) {
-                throw new AuthorizationException("Forbidden: you can't clear statements in this store.");
+        if (
+            isset($this->authentifier->consumer()->owner_id)
+            && $this->authentifier->consumer()->owner_id != $id
+        ) {
+            throw new AuthorizationException("Forbidden: you can't clear statements in this store.");
         }
 
         // Get the filters.
         $filters = $request->input('filters');
         unset($filters['owner_id']);
-        
+
         // Do it.
         try {
             $this->cleaner->clearStoreStatements($id, $filters);

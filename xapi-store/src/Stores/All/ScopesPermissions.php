@@ -20,11 +20,12 @@ class ScopesPermissions extends PermissionsProvider
      * @var array
      */
     protected $permissionClasses = [
-        
+
         'xapi-scope.all' => \Trax\XapiStore\Permissions\AllPermission::class,
         'xapi-scope.all-read' => \Trax\XapiStore\Permissions\AllReadPermission::class,
 
         'xapi-scope.statements-write' => \Trax\XapiStore\Permissions\StatementsWritePermission::class,
+        'xapi-scope.statements-delete' => \Trax\XapiStore\Permissions\StatementsDeletePermission::class,
         'xapi-scope.statements-read' => \Trax\XapiStore\Permissions\StatementsReadPermission::class,
         'xapi-scope.statements-read-mine' => \Trax\XapiStore\Permissions\StatementsReadMinePermission::class,
 

@@ -19,7 +19,7 @@ class AllPermission extends Permission
      * @var array
      */
     protected $capabilities = [
-        'statement.read.entity', 'statement.write.entity',
+        'statement.read.entity', 'statement.write.entity', 'statement.delete.entity',
         'state.read.owner', 'state.write.owner', 'state.delete.owner',
         'activity_profile.read.owner', 'activity_profile.write.owner', 'activity_profile.delete.owner',
         'agent_profile.read.owner', 'agent_profile.write.owner', 'agent_profile.delete.owner',

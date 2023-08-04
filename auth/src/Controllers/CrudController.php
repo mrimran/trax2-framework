@@ -235,7 +235,16 @@ abstract class CrudController extends Controller
     {
         // Validate request.
         $crudRequest = $this->validateRequest($request);
-
+        // dd($crudRequest);
+        // dd($crudRequest->query());
+        if (count($crudRequest->params()) == 0) {
+            abort(403);
+        }
+        if (!array_key_exists('data->actor->mbox', $crudRequest->params()['filters'])) {
+            abort(403);
+        }
+        // dd($crudRequest);
+        // $crudRequest->params()
         // Check permissions.
         $this->authorizer->must($this->permissionsDomain . '.delete');
 

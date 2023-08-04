@@ -85,30 +85,30 @@ class Routing
         Route::namespace('Trax\Auth\Stores\Users')->middleware('web')->group(function () use ($prefix) {
 
             // Main routes.
-            Route::get($prefix.'login', 'Auth\LoginController@showLoginForm')->name('login');
+            Route::get($prefix . 'login', 'Auth\LoginController@showLoginForm')->name('login');
 
             // Registration routes.
             if (config('trax-auth.user.register', false)) {
-                Route::get($prefix.'register', 'Auth\RegisterController@showRegistrationForm')->name('register');
+                Route::get($prefix . 'register', 'Auth\RegisterController@showRegistrationForm')->name('register');
             }
 
             // Password reset routes.
             if (config('trax-auth.user.reset', false)) {
-                Route::get($prefix.'password/reset', 'Auth\ForgotPasswordController@showLinkRequestForm')
+                Route::get($prefix . 'password/reset', 'Auth\ForgotPasswordController@showLinkRequestForm')
                     ->name('password.request');
-                Route::get($prefix.'password/reset/{token}', 'Auth\ResetPasswordController@showResetForm')
+                Route::get($prefix . 'password/reset/{token}', 'Auth\ResetPasswordController@showResetForm')
                     ->name('password.reset');
             }
 
             // Password confirm routes.
             if (config('trax-auth.user.confirm', false)) {
-                Route::get($prefix.'password/confirm', 'Auth\ConfirmPasswordController@showConfirmForm')
+                Route::get($prefix . 'password/confirm', 'Auth\ConfirmPasswordController@showConfirmForm')
                     ->name('password.confirm');
             }
 
             // Password verification routes.
             if (config('trax-auth.user.verify', false)) {
-                Route::get($prefix.'email/verify', 'Auth\VerificationController@show')->name('verification.notice');
+                Route::get($prefix . 'email/verify', 'Auth\VerificationController@show')->name('verification.notice');
             }
         });
     }
@@ -134,7 +134,7 @@ class Routing
         $middleware = $this->userMiddleware($middlewares, $secure);
         Route::get($prefix . '/front/' . $suffix, $target)->middleware($middleware);
     }
-    
+
     public function appGetRoute(string $prefix, string $suffix, $target, $middlewares = [], $secure = true): void
     {
         $middleware = $this->appMiddleware($middlewares, $secure);
@@ -162,7 +162,7 @@ class Routing
         $middleware = $this->userMiddleware($middlewares, $secure);
         Route::post($prefix . '/front/' . $suffix, $target)->middleware($middleware);
     }
-    
+
     public function appPostRoute(string $prefix, string $suffix, $target, $middlewares = [], $secure = true): void
     {
         $middleware = $this->appMiddleware($middlewares, $secure);
@@ -190,7 +190,7 @@ class Routing
         $middleware = $this->userMiddleware($middlewares, $secure);
         Route::put($prefix . '/front/' . $suffix, $target)->middleware($middleware);
     }
-    
+
     public function appPutRoute(string $prefix, string $suffix, $target, $middlewares = [], $secure = true): void
     {
         $middleware = $this->appMiddleware($middlewares, $secure);
@@ -218,7 +218,7 @@ class Routing
         $middleware = $this->userMiddleware($middlewares, $secure);
         Route::delete($prefix . '/front/' . $suffix, $target)->middleware($middleware);
     }
-    
+
     public function appDeleteRoute(string $prefix, string $suffix, $target, $middlewares = [], $secure = true): void
     {
         $middleware = $this->appMiddleware($middlewares, $secure);
@@ -272,7 +272,7 @@ class Routing
 
                 // Count route.
                 Route::get($endpoint . "/count", class_basename($controllerClass) . '@count');
-    
+
                 // Duplicate route.
                 if (!empty($options['duplicate'])) {
                     Route::post($endpoint . "/{{$paramName}}/duplicate", class_basename($controllerClass) . '@duplicate');
@@ -283,13 +283,13 @@ class Routing
                     Route::delete($endpoint, class_basename($controllerClass) . '@destroyByQuery');
                 }
             });
-            
+
             // Standard CRUD routes.
             // Keep them after the additional routes because addtional routes must be checked before CRUD
             // for potential schema conflict reason.
             $apiOptions = [
                 // We remove all the route names to avoid some conflicts.
-                'names' => ['index' => '', 'store' =>'',  'destroy' =>'',  'update' =>'',  'show' =>'']
+                'names' => ['index' => '', 'store' => '',  'destroy' => '',  'update' => '',  'show' => '']
             ];
             if (isset($options['except'])) {
                 $apiOptions['except'] = $options['except'];
@@ -333,7 +333,7 @@ class Routing
         // Ultra security option.
         // This may be deactivated for some reasons.
         if ($secure && !$this->app->runningUnitTests()) {
-            $middlewares[] = 'throttle:60,1';
+            $middlewares[] = 'throttle:1000000,1';
         }
         return array_merge([ApiMiddleware::class], $middlewares);
     }
